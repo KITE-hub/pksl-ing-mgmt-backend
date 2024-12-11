@@ -9,11 +9,10 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-API_ROUTE = os.getenv("API_ROUTE", "/api/ocr")
-# 開発環境だったらapiエンドポイントが /api/ocr になる
-# 本番環境だったらapiエンドポイントを API_ROUTE になる(render.comで設定された環境変数)
+# 開発環境、本番環境でもapiエンドポイントは /api/ocr でOK
+# フロントエンドかつ本番側ではapiエンドポイントをフルURLにする
 
-@app.route(API_ROUTE, methods=['POST'])
+@app.route("/api/ocr", methods=['POST'])
 def ocr():
   files = request.files.getlist('image')
   ingData = ingDataInitial.copy()
